@@ -42,8 +42,14 @@ def get_leaderboard():
 @app.post("/score")
 def post_score(entry: ScoreEntry):
     scores = load_scores()
+
+    # 닉네임 중복 체크
+    existing = [s for s in scores if s["nickname"] == entry.nickname.strip()]
+    if existing:
+        return {"error": "이미 존재하는 닉네임이에요!", "duplicate": True}
+
     scores.append(entry.model_dump())
     scores.sort(key=lambda x: x["score"], reverse=True)
     save_scores(scores)
-    rank = next(i+1 for i, s in enumerate(scores) if s == entry.model_dump())
-    return {"rank": rank, "total": len(scores)}
+    rank = next(i+1 for i, s in enumerate(scores) if s["nickname"] == entry.nickname)
+    return {"rank": rank, "total": len(scores), "duplicate": False}
