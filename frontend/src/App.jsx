@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 const W = 720, H = 260, GROUND = 210
 const PX = 80, PW = 34, PH = 46, PH_CROUCH = 20
 const GRAVITY = 0.72, JUMP_V = -13.5, MAX_SPEED = 10.0
-const API = 'http://127.0.0.1:8000'
+const API = 'https://neon-runner-backend-1spw.onrender.com'
 
 const STARS = Array.from({ length: 60 }, () => ({
   x: Math.random() * W,
